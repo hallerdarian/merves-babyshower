@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mitbringliste – Merves Babyshower</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink: #ec6fa3;
+    --pink-deep: #d84f8a;
+    --plum: #5a2a3f;
+    --card: #ffffff;
+    --line: #f0d9e4;
+    --ink: #4a3540;
+    --ink-soft: #8a7480;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    background: linear-gradient(180deg, #fdf1f6 0%, #fbe7f0 100%);
+    font-family: 'Nunito', sans-serif;
+    color: var(--ink);
+  }
+
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 20px 80px;
+  }
+
+  .doodle-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 22px;
+    margin: 6px 0 4px;
+  }
+
+  .doodle-row svg { opacity: 0.75; }
+
+  header { text-align: center; margin-bottom: 34px; }
+
+  .eyebrow-swirl {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: -6px;
+  }
+
+  h1 {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 64px;
+    color: var(--pink);
+    margin: 0;
+    line-height: 1.05;
+  }
+
+  h2 {
+    font-family: 'Caveat', cursive;
+    font-weight: 600;
+    font-size: 40px;
+    color: var(--pink);
+    margin: 2px 0 18px;
+  }
+
+  .tagline {
+    font-family: 'Caveat', cursive;
+    font-weight: 600;
+    font-size: 30px;
+    color: var(--plum);
+    margin: 18px 0 6px;
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: 18px;
+    box-shadow: 0 18px 40px rgba(90, 42, 63, 0.12);
+    padding: 32px 28px;
+    margin-top: 28px;
+  }
+
+  form {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 12px;
+    align-items: end;
+  }
+
+  @media (max-width: 560px) {
+    form { grid-template-columns: 1fr; }
+  }
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid var(--line);
+    border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+    background: #fffafc;
+    transition: border-color 0.15s ease;
+  }
+
+  input[type="text"]:focus { outline: none; border-color: var(--pink); }
+
+  button {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 10px;
+    background: var(--pink);
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+    white-space: nowrap;
+  }
+
+  button:hover { background: var(--pink-deep); }
+  button:active { transform: scale(0.97); }
+  button:disabled { background: #e3b8cc; cursor: default; }
+
+  .hint { font-size: 13px; color: var(--ink-soft); margin-top: 10px; }
+
+  .error-msg {
+    font-size: 13px;
+    color: #b3314c;
+    margin-top: 10px;
+    display: none;
+  }
+
+  .list-card { margin-top: 22px; padding: 8px 0 4px; }
+
+  .list-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 0 28px 14px;
+  }
+
+  .list-head h3 {
+    font-family: 'Caveat', cursive;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--plum);
+    margin: 0;
+  }
+
+  .count { font-size: 13px; color: var(--ink-soft); font-weight: 700; }
+
+  .live-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #4caf7d;
+    margin-right: 6px;
+    box-shadow: 0 0 0 0 rgba(76,175,125,0.6);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(76,175,125,0.5); }
+    70%  { box-shadow: 0 0 0 6px rgba(76,175,125,0); }
+    100% { box-shadow: 0 0 0 0 rgba(76,175,125,0); }
+  }
+
+  table { width: 100%; border-collapse: collapse; }
+
+  thead th {
+    text-align: left;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--ink-soft);
+    padding: 10px 28px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  tbody td {
+    padding: 14px 28px;
+    border-bottom: 1px solid var(--line);
+    font-size: 15px;
+    vertical-align: top;
+  }
+
+  tbody td.name { font-weight: 800; color: var(--plum); width: 38%; }
+  tbody tr:last-child td { border-bottom: none; }
+
+  .empty {
+    padding: 30px 28px 10px;
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  .flower-foot {
+    display: flex;
+    justify-content: center;
+    margin-top: 34px;
+    opacity: 0.7;
+  }
+
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 28px;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--plum);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 10;
+  }
+
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header>
+    <div class="eyebrow-swirl">
+      <svg width="26" height="26" viewBox="0 0 26 26"><path d="M2 13c0-6 5-10 10-8 4 1.5 4 6 0 6-3 0-3-3 0-4" stroke="#ec6fa3" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+      <h1>Mitbringliste</h1>
+      <svg width="26" height="26" viewBox="0 0 26 26"><path d="M24 13c0-6-5-10-10-8-4 1.5-4 6 0 6 3 0 3-3 0-4" stroke="#ec6fa3" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+    </div>
+    <h2>Merves Babyshower</h2>
+
+    <div class="doodle-row">
+      <svg width="18" height="18" viewBox="0 0 20 20"><path d="M10 1l1.6 6.2L18 9l-6.4 1.8L10 17l-1.6-6.2L2 9l6.4-1.8z" fill="none" stroke="#5a2a3f" stroke-width="1.3"/></svg>
+      <svg width="26" height="26" viewBox="0 0 20 20"><path d="M10 1l1.6 6.2L18 9l-6.4 1.8L10 17l-1.6-6.2L2 9l6.4-1.8z" fill="none" stroke="#5a2a3f" stroke-width="1.3"/></svg>
+      <svg width="18" height="18" viewBox="0 0 20 20"><path d="M10 1l1.6 6.2L18 9l-6.4 1.8L10 17l-1.6-6.2L2 9l6.4-1.8z" fill="none" stroke="#5a2a3f" stroke-width="1.3"/></svg>
+    </div>
+
+    <div class="tagline">Ich bringe mit …</div>
+  </header>
+
+  <div class="card">
+    <form id="entryForm" autocomplete="off">
+      <div>
+        <label for="nameInput">Dein Name</label>
+        <input type="text" id="nameInput" placeholder="z. B. Lisa" maxlength="40" required>
+      </div>
+      <div>
+        <label for="itemInput">Was bringst du mit?</label>
+        <input type="text" id="itemInput" placeholder="z. B. Nudelsalat" maxlength="80" required>
+      </div>
+      <button type="submit" id="submitBtn">Eintragen</button>
+    </form>
+    <div class="hint">Trag dich einfach ein – die Liste ist für alle sichtbar und aktualisiert sich automatisch.</div>
+    <div class="error-msg" id="errorMsg"></div>
+  </div>
+
+  <div class="card list-card">
+    <div class="list-head">
+      <h3>Wer bringt was</h3>
+      <span class="count"><span class="live-dot"></span><span id="countText">wird geladen …</span></span>
+    </div>
+    <div id="listWrap">
+      <div class="empty">Lade Einträge …</div>
+    </div>
+  </div>
+
+  <div class="flower-foot">
+    <svg width="34" height="34" viewBox="0 0 34 34">
+      <g fill="none" stroke="#5a2a3f" stroke-width="1.3">
+        <ellipse cx="17" cy="10" rx="5" ry="6"/>
+        <ellipse cx="24" cy="17" rx="6" ry="5"/>
+        <ellipse cx="17" cy="24" rx="5" ry="6"/>
+        <ellipse cx="10" cy="17" rx="6" ry="5"/>
+        <circle cx="17" cy="17" r="2.4"/>
+      </g>
+    </svg>
+  </div>
+
+</div>
+
+<div class="toast" id="toast">Eingetragen ✓</div>
+
+<script>
+  const listWrap = document.getElementById('listWrap');
+  const countText = document.getElementById('countText');
+  const form = document.getElementById('entryForm');
+  const nameInput = document.getElementById('nameInput');
+  const itemInput = document.getElementById('itemInput');
+  const submitBtn = document.getElementById('submitBtn');
+  const toast = document.getElementById('toast');
+  const errorMsg = document.getElementById('errorMsg');
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+
+  function renderEntries(entries) {
+    if (!entries || entries.length === 0) {
+      listWrap.innerHTML = '<div class="empty">Noch nichts eingetragen – sei die Erste oder der Erste! 🌸</div>';
+      countText.textContent = '0 Einträge';
+      return;
+    }
+    let html = '<table><thead><tr><th>Name</th><th>Bringt mit</th></tr></thead><tbody>';
+    for (const e of entries) {
+      html += `<tr><td class="name">${escapeHtml(e.name)}</td><td>${escapeHtml(e.item)}</td></tr>`;
+    }
+    html += '</tbody></table>';
+    listWrap.innerHTML = html;
+    countText.textContent = entries.length + (entries.length === 1 ? ' Eintrag' : ' Einträge');
+  }
+
+  async function loadEntries() {
+    try {
+      const res = await fetch('/api/entries');
+      if (!res.ok) throw new Error('load failed');
+      const entries = await res.json();
+      renderEntries(entries);
+    } catch (err) {
+      countText.textContent = '–';
+    }
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = nameInput.value.trim();
+    const item = itemInput.value.trim();
+    if (!name || !item) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Speichere …';
+    errorMsg.style.display = 'none';
+
+    try {
+      const res = await fetch('/api/entries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, item }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Speichern fehlgeschlagen.');
+
+      nameInput.value = '';
+      itemInput.value = '';
+      showToast('Eingetragen ✓');
+      await loadEntries();
+    } catch (err) {
+      errorMsg.textContent = 'Hat nicht geklappt: ' + err.message;
+      errorMsg.style.display = 'block';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Eintragen';
+    }
+  });
+
+  loadEntries();
+  setInterval(loadEntries, 4000);
+</script>
+
+</body>
+</html>
